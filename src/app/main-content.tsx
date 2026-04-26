@@ -12,7 +12,7 @@ import { ChatInterface } from "@/components/chat/ChatInterface";
 import { FileTree } from "@/components/editor/FileTree";
 import { CodeEditor } from "@/components/editor/CodeEditor";
 import { PreviewFrame } from "@/components/preview/PreviewFrame";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import { HeaderActions } from "@/components/HeaderActions";
 
 interface MainContentProps {
@@ -60,17 +60,32 @@ export function MainContent({ user, project }: MainContentProps) {
               <div className="h-full flex flex-col bg-white">
                 {/* Top Bar */}
                 <div className="h-14 border-b border-neutral-200/60 px-6 flex items-center justify-between bg-neutral-50/50">
-                  <Tabs
-                    value={activeView}
-                    onValueChange={(v) =>
-                      setActiveView(v as "preview" | "code")
-                    }
-                  >
-                    <TabsList className="bg-white/60 border border-neutral-200/60 p-0.5 h-9 shadow-sm">
-                      <TabsTrigger value="preview" className="data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm text-neutral-600 px-4 py-1.5 text-sm font-medium transition-all">Preview</TabsTrigger>
-                      <TabsTrigger value="code" className="data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm text-neutral-600 px-4 py-1.5 text-sm font-medium transition-all">Code</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
+                  <div className="bg-white/60 border border-neutral-200/60 p-0.5 h-9 shadow-sm rounded-lg inline-flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => setActiveView("preview")}
+                      className={cn(
+                        "px-4 py-1.5 text-sm font-medium rounded-md transition-all",
+                        activeView === "preview"
+                          ? "bg-white text-neutral-900 shadow-sm"
+                          : "text-neutral-600 hover:text-neutral-900"
+                      )}
+                    >
+                      Preview
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveView("code")}
+                      className={cn(
+                        "px-4 py-1.5 text-sm font-medium rounded-md transition-all",
+                        activeView === "code"
+                          ? "bg-white text-neutral-900 shadow-sm"
+                          : "text-neutral-600 hover:text-neutral-900"
+                      )}
+                    >
+                      Code
+                    </button>
+                  </div>
                   <HeaderActions user={user} projectId={project?.id} />
                 </div>
 
